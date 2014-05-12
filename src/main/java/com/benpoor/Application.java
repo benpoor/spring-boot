@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * To change this template use File | Settings | File Templates.
  */
 @Configuration
-@ComponentScan({"com","reactor"})
+@ComponentScan(basePackages = {"com","reactor"})
 @EnableAutoConfiguration
 public class Application {
     public static void main(String[] args){
