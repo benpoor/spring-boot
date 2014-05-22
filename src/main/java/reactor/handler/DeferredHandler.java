@@ -25,7 +25,7 @@ public class DeferredHandler {
         } catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("************结束***********"+d);
         d.accept(new ResponseEntity<String>("Hello World!", HttpStatus.OK));
+        System.out.println("************结束***********"+d);
     }
 }

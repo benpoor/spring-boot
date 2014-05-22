@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.Environment;
 import reactor.core.Reactor;
+import reactor.core.composable.Composable;
 import reactor.core.composable.Deferred;
 import reactor.core.composable.Promise;
 import reactor.core.composable.spec.Promises;
@@ -34,6 +35,7 @@ public class PromiseController {
         Deferred<ResponseEntity<String>, Promise<ResponseEntity<String>>> d = Promises.<ResponseEntity<String>>defer(env);
 
         reactor.notify("test", Event.wrap(d));
+
 
         return d.compose();
     }
