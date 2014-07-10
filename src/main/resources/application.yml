@@ -12,3 +12,9 @@ tomcat:
   remoteIpHeader: x-forwarded-for
   basedir:
   backgroundProcessorDelay: 30 # secs
+
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/huajiemu
+  username: root
+  password: 123456

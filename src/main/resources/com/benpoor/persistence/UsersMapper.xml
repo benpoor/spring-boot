@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benpoor.persistence.UsersMapper">
+<resultMap type="Users" id="mUsers">
+  <id column="id" property="id"/>  
+  <result column="name" property="name"/>  
+  <result column="password" property="password"/>  
+  <result column="status" property="status"/>  
+  <result column="permission" property="permission"/>  
+  <result column="email" property="email"/>  
+  <result column="mobile" property="mobile"/>  
+  <result column="sex" property="sex"/>  
+  <result column="nick_name" property="nickName"/>  
+  <result column="img_url" property="imgUrl"/>  
+  <result column="remark" property="remark"/>  
+  <result column="city" property="city"/>  
+  <result column="industry" property="industry"/>  
+  <result column="profession" property="profession"/>  
+  <result column="created_at" property="createdAt"/>  
+  <result column="updated_at" property="updatedAt"/>  
+</resultMap>
+<!--插入记录-->
+<insert id="insert" parameterType="Users"> 
+    insert into huajiemu.users(id,name,password,status,permission,email,mobile,sex,nick_name,img_url,remark,city,industry,profession,created_at,updated_at)
+    values(#{id},#{name},#{password},#{status},#{permission},#{email},#{mobile},#{sex},#{nickName},#{imgUrl},#{remark},#{city},#{industry},#{profession},#{createdAt},#{updatedAt})
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+        select LAST_INSERT_ID() AS id
+    </selectKey>
+</insert>
+<!--根据主键更新数据-->
+<update id="update" parameterType="Users">
+   update huajiemu.users
+   <set>
+        <if test="name!=null">name=#{name},</if>
+        <if test="password!=null">password=#{password},</if>
+        <if test="status!=null">status=#{status},</if>
+        <if test="permission!=null">permission=#{permission},</if>
+        <if test="email!=null">email=#{email},</if>
+        <if test="mobile!=null">mobile=#{mobile},</if>
+        <if test="sex!=null">sex=#{sex},</if>
+        <if test="nickName!=null">nick_name=#{nickName},</if>
+        <if test="imgUrl!=null">img_url=#{imgUrl},</if>
+        <if test="remark!=null">remark=#{remark},</if>
+        <if test="city!=null">city=#{city},</if>
+        <if test="industry!=null">industry=#{industry},</if>
+        <if test="profession!=null">profession=#{profession},</if>
+        <if test="createdAt!=null">created_at=#{createdAt},</if>
+        <if test="updatedAt!=null">updated_at=#{updatedAt},</if>
+       </set>
+	where  id= #{id} 
+</update>
+<!--不分页查询-->
+<sql id="ifWhere">
+<where>
+    <if test="id!=null ">and id=#{id}</if>
+    <if test="name!=null and name!=''">and name=#{name}</if>
+    <if test="password!=null and password!=''">and password=#{password}</if>
+    <if test="status!=null and status!=0">and status=#{status}</if>
+    <if test="permission!=null and permission!=0">and permission=#{permission}</if>
+    <if test="email!=null and email!=''">and email=#{email}</if>
+    <if test="mobile!=null and mobile!=''">and mobile=#{mobile}</if>
+    <if test="sex!=null and sex!=0">and sex=#{sex}</if>
+    <if test="nickName!=null and nickName!=''">and nick_name=#{nickName}</if>
+    <if test="imgUrl!=null and imgUrl!=''">and img_url=#{imgUrl}</if>
+    <if test="remark!=null and remark!=''">and remark=#{remark}</if>
+    <if test="city!=null and city!=''">and city=#{city}</if>
+    <if test="industry!=null and industry!=''">and industry=#{industry}</if>
+    <if test="profession!=null and profession!=''">and profession=#{profession}</if>
+    <if test="createdAt!=null ">and created_at=#{createdAt}</if>
+    <if test="updatedAt!=null ">and updated_at=#{updatedAt}</if>
+</where>
+</sql>
+<!-- 分页查询条件 -->
+<sql id="ifPageWhere">
+	<include refid="ifWhere"/>
+	<if test="pageSize!=null"><!-- 页大小不为空 -->
+		<if test="offset!=null">limit #{offset},#{pageSize}</if><!-- 偏移位置也不为空 -->
+		<if test="offset==null">limit #{pageSize}</if>          <!-- 偏移位置也为空,缺省为从0开始 -->
+	</if>
+</sql>
+<!--删除数据语句-->
+<delete id="delete"  parameterType="Users" >
+    delete from huajiemu.users 
+    <include refid="ifWhere"/>
+</delete>
+<!--查询单条记录-->
+<select id="findOne" resultMap="mUsers" parameterType="Users">
+    select * from huajiemu.users
+    <include refid="ifWhere"/>
+limit 1
+</select>
+<!--不分页查询多条记录-->
+<select id="find" resultMap="mUsers" parameterType="Users">
+    select * from huajiemu.users
+    <include refid="ifWhere"/>
+</select>
+<!--分页查询语句-->
+<select id="findAll" resultMap="mUsers" parameterType="Users">
+    select * from huajiemu.users
+    <include refid="ifPageWhere"/>
+</select>
+<!--根据条件查询记录数量-->
+<select id="count" resultType="long" parameterType="Users">
+    select count(*) from huajiemu.users
+    <include refid="ifWhere"/>
+</select>
+</mapper>
+    
