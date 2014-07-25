@@ -5,6 +5,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import org.junit.Test;
 
 /**
@@ -21,9 +23,10 @@ public class HeloServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try{
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup, workerGroup);
-            serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.childHandler(new HelloServerInitializer());
+            serverBootstrap.group(bossGroup, workerGroup)
+                            .channel(NioServerSocketChannel.class)
+                            .handler(new LoggingHandler(LogLevel.DEBUG))
+                            .childHandler(new HelloServerInitializer());
 
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
