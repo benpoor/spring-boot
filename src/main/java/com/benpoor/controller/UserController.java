@@ -1,5 +1,6 @@
 package com.benpoor.controller;
 
+import com.benpoor.common.PageParameter;
 import com.benpoor.model.User;
 import com.benpoor.model.Users;
 import com.benpoor.persistence.UsersMapper;
@@ -35,7 +36,10 @@ public class UserController {
     @RequestMapping("/view")
     public List<Users> views(){
         Users users = new Users();
-        List<Users> usersList = usersMapper.find(users);
+        PageParameter page = new PageParameter();
+        page.setCurrentPage(2);
+        users.setPage(page);
+        List<Users> usersList = usersMapper.findPage(users);
         return usersList;
     }
 }

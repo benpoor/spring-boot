@@ -6,7 +6,7 @@ package com.benpoor.common;
  */
 public class PageParameter {
 
-    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE = 2;
 
     private int pageSize;
     private int currentPage;

@@ -1,6 +1,8 @@
 package com.benpoor.model;
 
 
+import com.benpoor.common.PageParameter;
+
 import java.io.Serializable;
 
 public class Users implements Serializable {
@@ -22,6 +24,8 @@ public class Users implements Serializable {
     private String profession;
     private java.util.Date  createdAt;
     private java.util.Date  updatedAt;
+    private PageParameter page;
+
 
     public Long getId(){
 		return id;
@@ -186,5 +190,13 @@ public class Users implements Serializable {
     }
     public void setUpdatedAt(java.util.Date  updatedAt){
 		this.updatedAt=updatedAt;
+    }
+
+    public PageParameter getPage() {
+        return page;
+    }
+
+    public void setPage(PageParameter page) {
+        this.page = page;
     }
 }

@@ -12,5 +12,7 @@ import java.util.List;
  */
 public interface UsersMapper {
     public List<Users> find(Users users);
+
+    public List<Users> findPage(Users users);
 }
     
